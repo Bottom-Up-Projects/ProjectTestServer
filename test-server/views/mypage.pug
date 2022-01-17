@@ -1,0 +1,10 @@
+extends layout
+
+block content 
+    p ID : #{username}
+    br
+    p Password : #{password}
+    div Change Password
+        form(action="/change_password", method="post")
+            input(type="password", name="new_password", placeholder="Password")
+            input(type="submit", value="Change Password")

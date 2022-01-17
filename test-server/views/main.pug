@@ -1,0 +1,18 @@
+extends layout
+
+block content
+    if authorized
+        h2 welcome, #{username}
+        a(href="/mypage") My Page
+        br
+        a(href="/logout") Logout
+
+        
+    
+    
+    
+    
+    else
+        a(href="/login") Login
+        br
+        a(href="/register") Register
