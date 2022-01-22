@@ -1,9 +1,9 @@
-const bodyParser = require('body-parser');
 var express = require('express');
 var router = express.Router();
 var mysql = require('mysql');
 var sessionStorage = require('./../public/javascripts/session');
 var bycrypt = require('bcrypt');
+var viewsVariables = require('./../public/javascripts/variables');
 var saltRounds = 10;
 
 require('dotenv').config();
@@ -12,7 +12,7 @@ const connection = mysql.createConnection({
   host: process.env.DB_HOST,
   user: process.env.DB_USER,
   password: process.env.DB_PASSWORD,
-  database: process.env.DB_DB,
+  database: process.env.DB_DATABASE,
 });
 
 connection.connect((err) => {
@@ -23,21 +23,14 @@ connection.connect((err) => {
   console.log('connected as id ' + connection.threadId);
 });
 
-var viewsVariables = {
-  title : "Botton Up Project Test Server", 
-  footer : "Made by Lake",
-  authorized : false,
-}
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
   // res.send("Hello World!");
   if(req.cookies.sessionid != undefined && req.cookies.sessionid == sessionStorage.getSession(req.cookies.username)){
-    viewsVariables.authorized = true;
-    res.render('main', Object.assign(viewsVariables, {username : req.cookies.username}));
+    res.render('main', Object.assign(viewsVariables, {authorized: true, username : req.cookies.username}));
   }else{
-    viewsVariables.authorized = false;
-    res.render('main', Object.assign(viewsVariables));
+    res.render('main', Object.assign(viewsVariables, {authorized: false}));
   }
 });
 
@@ -52,7 +45,7 @@ router.post('/login', (req, res, next) => {
   var sqlParams = [username];
   connection.query(sqlQuery, sqlParams, (err, results) => {
     if (err) {
-      console.log(err);
+      console.error(err);
       res.send(`<script>alert('Database Connection Error!'); location.href='/login'</script>`);
       return;
     }

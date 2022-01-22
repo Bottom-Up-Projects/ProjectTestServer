@@ -1,0 +1,15 @@
+{
+    "bottom-up-data-structure" : {
+        "link": "https://github.com/Bottom-Up-Projects/bottom-up-data-structure",
+        "projects" : {
+            "project01" : ["queue.h", "stack.h"],
+            "project02" : ["iterator.h", "vector.h", "deque.h"]
+        }
+    },
+    "bottom-up-artificial-intelligence" : {
+        "link": "https://github.com/Bottom-Up-Projects/bottom-up-artificial-intelligence"
+    },
+    "bottom-up-computer" : {
+        "link": "https://github.com/Bottom-Up-Projects/bottom-up-computer"
+    }
+}

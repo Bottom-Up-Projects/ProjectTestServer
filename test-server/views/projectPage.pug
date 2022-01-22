@@ -1,0 +1,46 @@
+extends layout 
+
+block content 
+    h3 #{projectName}
+    a(href=`${project.link}`) [Github Link]
+    br
+
+    form(action=`/projects/upload/${projectName}`, method="post", enctype="multipart/form-data")
+        p
+            select(id="projectNum" onchange="changeProject()" name="projectNum")
+                option(value="") [Select Project]
+                if project.projects !== undefined
+                    -var Pnum = Object.keys(project.projects);
+                else
+                    -var Pnum = {}
+                each p in Pnum
+                    option(value=`${p}`) #{p}
+
+        p
+            select(id="projectFile" name="projectFile")
+                option(value="0") [Select File]
+
+        p
+            input(type="file", name="file")
+            input(type="submit", value="Upload")
+
+    script(src="//code.jquery.com/jquery-3.5.1.min.js")
+    script.
+        var project = !{JSON.stringify(project)}
+        console.log(project);
+        function changeProject(){
+            var selected = $("#projectNum").val();
+
+            if(selected == ""){
+                $("#projectFile").empty();
+                $("#projectFile").append(`<option value="">Select File</option>`);
+            }
+            else{
+                $("#projectFile").empty();
+                $("#projectFile").append(`<option value="">Select File</option>`);
+                var files = project.projects[selected];
+                for(var i = 0; i < files.length; i++){
+                    $("#projectFile").append(`<option value="${files[i]}">${files[i]}</option>`);
+                }
+            }
+        }

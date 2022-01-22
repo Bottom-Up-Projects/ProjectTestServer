@@ -1,0 +1,10 @@
+extends layout
+
+block content 
+  p #{JSON.stringify(githubProjects)}
+  -var projectNames = Object.keys(githubProjects);
+
+  ul 
+    each name in projectNames
+      li 
+        a(href=`/projects/${name}`) [#{name}]
